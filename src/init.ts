@@ -15,12 +15,12 @@ const initCore = () => {
   initAssign();
   initConfig();
   initExecute();
-  initResolveHook();
 };
 
 const resetCore = () => {
   initDefinedFunctions();
   initPrototypeScope();
+  initResolveHook();
 };
 
 export { initCore, resetCore };
