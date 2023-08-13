@@ -1,6 +1,6 @@
 import {
   appendDefinedFunctions,
-  appendResolveHook,
+  appendResultHook,
   argumentParser,
   assign,
   execute,
@@ -28,7 +28,7 @@ class NiwangoCore {
   static resetCore = resetCore;
   static parseScript = parseScript;
   static appendDefinedFunctions = appendDefinedFunctions;
-  static appendResolveHook = appendResolveHook;
+  static appendResultHook = appendResultHook;
   static setIsWide = setIsWide;
   static errors = Errors;
   static prototypeScope = prototypeScope;

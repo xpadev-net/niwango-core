@@ -1,5 +1,5 @@
 import { A_ANY, T_scope } from "@/@types/ast";
-import { resolveHook } from "@/context";
+import { resultHook } from "@/context";
 import typeGuard from "@/typeGuard";
 
 /**
@@ -27,7 +27,7 @@ const resolve = (script: A_ANY, scopes: T_scope[], trace: A_ANY[]) => {
 
 const processResolveHook = (scope: T_scope, name: string) => {
   let value = scope[name];
-  for (const hook of resolveHook) {
+  for (const hook of resultHook) {
     value = hook(value);
   }
   scope[name] = value;

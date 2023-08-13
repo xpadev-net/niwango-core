@@ -72,19 +72,19 @@ const setIsWide = (val: boolean) => {
   isWide = val;
 };
 
-let resolveHook: ((input: unknown) => unknown)[] = [];
+let resultHook: ((input: unknown) => unknown)[] = [];
 
-const appendResolveHook = (func: (input: unknown) => unknown) => {
-  resolveHook.push(func);
+const appendResultHook = (func: (input: unknown) => unknown) => {
+  resultHook.push(func);
 };
 
-const initResolveHook = () => {
-  resolveHook = [];
+const initResultHook = () => {
+  resultHook = [];
 };
 
 export {
   appendDefinedFunctions,
-  appendResolveHook,
+  appendResultHook,
   argumentParser,
   assign,
   definedFunctions,
@@ -92,11 +92,11 @@ export {
   getName,
   initDefinedFunctions,
   initPrototypeScope,
-  initResolveHook,
+  initResultHook,
   isWide,
   prototypeScope,
-  resolveHook,
   resolvePrototype,
+  resultHook,
   setArgumentParser,
   setAssign,
   setExecute,

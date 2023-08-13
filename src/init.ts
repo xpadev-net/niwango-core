@@ -2,7 +2,7 @@ import { initConfig } from "@/config";
 import {
   initDefinedFunctions,
   initPrototypeScope,
-  initResolveHook,
+  initResultHook,
 } from "@/context";
 import { initExecute } from "@/executor";
 import { initResolvePrototype } from "@/prototype/resolve";
@@ -20,7 +20,7 @@ const initCore = () => {
 const resetCore = () => {
   initDefinedFunctions();
   initPrototypeScope();
-  initResolveHook();
+  initResultHook();
 };
 
 export { initCore, resetCore };
