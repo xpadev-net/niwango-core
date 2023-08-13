@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
-  input: "./dist/dist/dts/main.d.ts",
+  input: "./dist/dts/main.d.ts",
   output: [{ file: "dist/niwango-core.d.ts", format: "es" }],
   plugins: [typescriptPaths(), dts()],
 };
