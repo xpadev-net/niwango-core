@@ -1,4 +1,5 @@
 import { A_ANY, T_scope } from "@/@types/ast";
+import { resolveHook } from "@/context";
 import typeGuard from "@/typeGuard";
 
 /**
@@ -12,7 +13,7 @@ const resolve = (script: A_ANY, scopes: T_scope[], trace: A_ANY[]) => {
     if (typeGuard.Identifier(script)) {
       for (const scope of scopes) {
         if (scope[script.name] !== undefined) {
-          return scope[script.name];
+          return processResolveHook(scope, script.name);
         }
       }
     }
@@ -22,6 +23,15 @@ const resolve = (script: A_ANY, scopes: T_scope[], trace: A_ANY[]) => {
       console.error(`[resolve] ${e.name}: ${e.message}`, script, scopes, trace);
     }
   }
+};
+
+const processResolveHook = (scope: T_scope, name: string) => {
+  let value = scope[name];
+  for (const hook of resolveHook) {
+    value = hook(value);
+  }
+  scope[name] = value;
+  return value;
 };
 
 export { resolve };
