@@ -17,12 +17,12 @@ const resolve = (script: A_ANY, scopes: T_scope[], trace: A_ANY[]) => {
         }
       }
     }
-    return undefined;
   } catch (e) {
     if (e instanceof Error) {
       console.error(`[resolve] ${e.name}: ${e.message}`, script, scopes, trace);
     }
   }
+  return undefined;
 };
 
 const processResolveHook = (scope: T_scope, name: string) => {
