@@ -10,6 +10,7 @@ const processWhileKari: PrototypeValueFunction = (
 ) => {
   let result: unknown;
   while (execute(script.arguments[0], scopes, trace) as boolean) {
+    // eslint-disable-next-line prefer-const
     result = execute(script.arguments[1], scopes, trace);
   }
   return result;
