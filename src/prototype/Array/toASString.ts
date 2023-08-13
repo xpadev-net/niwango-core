@@ -1,5 +1,5 @@
-import { PrototypeArrayFunction } from "@/prototype/Array/index";
 import { resolvePrototype } from "@/context";
+import { PrototypeArrayFunction } from "@/prototype/Array/index";
 import { getType } from "@/prototype/getType";
 
 const processToASString: PrototypeArrayFunction = (

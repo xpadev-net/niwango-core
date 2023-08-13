@@ -2,14 +2,14 @@ import { PrototypeFunction, PrototypeFunctions } from "@/@types/prototype";
 
 import { processAbs } from "./abs";
 import { processCos } from "./cos";
+import { processDecrease } from "./decrease";
 import { processFloor } from "./floor";
+import { processIncrease } from "./increase";
 import { processPow } from "./pow";
+import { processRaw } from "./raw";
 import { processSin } from "./sin";
 import { processTimes } from "./times";
-import { processRaw } from "./raw";
 import { processToASString } from "./toASString";
-import { processIncrease } from "./increase";
-import { processDecrease } from "./decrease";
 
 export type PrototypeNumberFunction = PrototypeFunction<number>;
 

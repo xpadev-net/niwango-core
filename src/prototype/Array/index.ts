@@ -1,4 +1,5 @@
 import { PrototypeFunction, PrototypeFunctions } from "@/@types/prototype";
+import { processToASString } from "@/prototype/Array/toASString";
 
 import { processIndex } from "./_index";
 import { processJoin } from "./join";
@@ -11,7 +12,6 @@ import { processSort } from "./sort";
 import { processSum } from "./sum";
 import { processUnshift } from "./unshift";
 import { processWalk } from "./walk";
-import { processToASString } from "@/prototype/Array/toASString";
 
 export type PrototypeArrayFunction = PrototypeFunction<Array<unknown>>;
 
