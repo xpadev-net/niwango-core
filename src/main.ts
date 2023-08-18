@@ -39,4 +39,5 @@ class NiwangoCore {
 
 export default NiwangoCore;
 
+export type * from "./parser/parser";
 export type * from "@/@types";
