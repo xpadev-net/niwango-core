@@ -12,7 +12,7 @@ import {
 import * as Errors from "@/errors";
 import { initCore, resetCore } from "@/init";
 import { parseScript } from "@/parser/parse";
-import { parse } from "@/parser/parser";
+import { parse } from "./parser/parser";
 
 initCore();
 
