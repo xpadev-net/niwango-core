@@ -12,6 +12,7 @@ import {
 import * as Errors from "@/errors";
 import { initCore, resetCore } from "@/init";
 import { parseScript } from "@/parser/parse";
+import { parse } from "@/parser/parser";
 
 initCore();
 
@@ -27,6 +28,7 @@ class NiwangoCore {
   static utils = utils;
   static resetCore = resetCore;
   static parseScript = parseScript;
+  static parse = parse;
   static appendDefinedFunctions = appendDefinedFunctions;
   static appendResultHook = appendResultHook;
   static setIsWide = setIsWide;
