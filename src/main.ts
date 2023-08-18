@@ -12,7 +12,7 @@ import {
 import * as Errors from "@/errors";
 import { initCore, resetCore } from "@/init";
 import { parseScript } from "@/parser/parse";
-import { parse } from "./parser/parser";
+import { parse, SyntaxError as PeggySyntaxError } from "./parser/parser";
 
 initCore();
 
@@ -29,6 +29,7 @@ class NiwangoCore {
   static resetCore = resetCore;
   static parseScript = parseScript;
   static parse = parse;
+  static PeggySyntaxError = PeggySyntaxError;
   static appendDefinedFunctions = appendDefinedFunctions;
   static appendResultHook = appendResultHook;
   static setIsWide = setIsWide;
@@ -39,5 +40,4 @@ class NiwangoCore {
 
 export default NiwangoCore;
 
-export type * from "./parser/parser";
 export type * from "@/@types";
