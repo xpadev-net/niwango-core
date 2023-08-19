@@ -17,10 +17,7 @@ const parseScript = (content: string, name: string): A_ANY => {
         throw e;
       }
       console.info(e.format([{ source: name, text: script }]));
-      if (
-        script.length < 1 ||
-        script.slice(0, e.location.start.offset) === script
-      )
+      if (script.slice(0, e.location.start.offset) === script && script !== "")
         throw firstError;
       script =
         script.slice(0, e.location.start.offset) +
