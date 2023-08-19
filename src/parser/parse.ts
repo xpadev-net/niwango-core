@@ -17,11 +17,11 @@ const parseScript = (content: string, name: string): A_ANY => {
         throw e;
       }
       console.info(e.format([{ source: name, text: script }]));
-      if (script.slice(0, e.location.start.offset) === script && script !== "")
-        throw firstError;
-      script =
+      const removed =
         script.slice(0, e.location.start.offset) +
         script.slice(e.location.start.offset + 1);
+      if (script === removed) throw firstError;
+      script = removed;
     }
   }
   throw firstError;
