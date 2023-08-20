@@ -127,7 +127,7 @@ IdentifierName "identifier"
   = __ "/"? __ head:IdentifierStart tail:IdentifierPart* {
       return {
         type: "Identifier",
-        name: head + tail.join("")
+        name: head + tail.join(""),location: location()
       };
     }
 
@@ -212,14 +212,14 @@ Literal
   / RegularExpressionLiteral
 
 NullLiteral
-  = NullToken { return { type: "Literal", value: null }; }
+  = NullToken { return { type: "Literal", value: null,location: location() }; }
 
 NilLiteral
-  = NilToken { return { type: "Literal", value: undefined }; }
+  = NilToken { return { type: "Literal", value: undefined,location: location() }; }
 
 BooleanLiteral
-  = TrueToken  { return { type: "Literal", value: true  }; }
-  / FalseToken { return { type: "Literal", value: false }; }
+  = TrueToken  { return { type: "Literal", value: true,location: location()  }; }
+  / FalseToken { return { type: "Literal", value: false,location: location() }; }
 
 // The "!(IdentifierStart / DecimalDigit)" predicate is not part of the official
 // grammar, it comes from text in section 7.8.3.
@@ -236,13 +236,13 @@ NumericLiteral "number"
 
 DecimalLiteral
   = DecimalIntegerLiteral "." DecimalDigit* ExponentPart? {
-      return { type: "Literal", value: parseFloat(text()) };
+      return { type: "Literal", value: parseFloat(text()),location: location() };
     }
   / "." DecimalDigit+ ExponentPart? {
-      return { type: "Literal", value: parseFloat(text()) };
+      return { type: "Literal", value: parseFloat(text()),location: location() };
     }
   / DecimalIntegerLiteral ExponentPart? {
-      return { type: "Literal", value: parseFloat(text()) };
+      return { type: "Literal", value: parseFloat(text()),location: location() };
     }
 
 DecimalIntegerLiteral
@@ -266,12 +266,12 @@ SignedInteger
 
 HexIntegerLiteral
   = "0x"i digits:$HexDigit+ {
-      return { type: "Literal", value: parseInt(digits, 16) };
+      return { type: "Literal", value: parseInt(digits, 16),location: location() };
      }
 
 OctalIntegerLiteral
   = "0"i digits:$OctalDigit+ {
-      return { type: "Literal", value: parseInt(digits, 8) };
+      return { type: "Literal", value: parseInt(digits, 8),location: location() };
      }
 
 HexDigit
@@ -281,10 +281,10 @@ OctalDigit
 
 StringLiteral "string"
   = '"' chars:DoubleStringCharacter* '"' {
-      return { type: "Literal", value: chars.join("") };
+      return { type: "Literal", value: chars.join(""),location: location() };
     }
   / "'" chars:SingleStringCharacter* "'" {
-      return { type: "Literal", value: chars.join("") };
+      return { type: "Literal", value: chars.join(""),location: location() };
     }
 
 DoubleStringCharacter
@@ -350,7 +350,7 @@ RegularExpressionLiteral "regular expression"
         error(e.message);
       }
 
-      return { type: "Literal", value: value };
+      return { type: "Literal", value: value,location: location() };
     }
 
 RegularExpressionBody
@@ -504,7 +504,7 @@ EOF
 // ----- A.3 Expressions -----
 
 PrimaryExpression
-  = ThisToken { return { type: "ThisExpression" }; }
+  = ThisToken { return { type: "ThisExpression",location: location() }; }
   / Identifier
   / Literal
   / ArrayLiteral
@@ -515,19 +515,19 @@ ArrayLiteral
   = "[" __ elision:(Elision __)? "]" {
       return {
         type: "ArrayExpression",
-        elements: optionalList(extractOptional(elision, 0))
+        elements: optionalList(extractOptional(elision, 0)),location: location()
       };
     }
   / "[" __ elements:ElementList __ "]" {
       return {
         type: "ArrayExpression",
-        elements: elements
+        elements: elements,location: location()
       };
     }
   / "[" __ elements:ElementList __ "," __ elision:(Elision __)? "]" {
       return {
         type: "ArrayExpression",
-        elements: elements.concat(optionalList(extractOptional(elision, 0)))
+        elements: elements.concat(optionalList(extractOptional(elision, 0))),location: location()
       };
     }
 
@@ -548,12 +548,12 @@ Elision
   = "," commas:(__ ",")* { return filledArray(commas.length + 1, null); }
 
 ObjectLiteral
-  = "{" __ "}" { return { type: "ObjectExpression", properties: [] }; }
+  = "{" __ "}" { return { type: "ObjectExpression", properties: [],location: location() }; }
   / "{" __ properties:PropertyNameAndValueList __ "}" {
-       return { type: "ObjectExpression", properties: properties };
+       return { type: "ObjectExpression", properties: properties,location: location() };
      }
   / "{" __ properties:PropertyNameAndValueList __ "," __ "}" {
-       return { type: "ObjectExpression", properties: properties };
+       return { type: "ObjectExpression", properties: properties,location: location() };
      }
 PropertyNameAndValueList
   = head:PropertyAssignment tail:(__ "," __ PropertyAssignment)* {
@@ -562,7 +562,7 @@ PropertyNameAndValueList
 
 PropertyAssignment
   = key:PropertyName __ ":" __ value:AssignmentExpression {
-      return { type: "Property", key: key, value: value, kind: "init" };
+      return { type: "Property", key: key, value: value, kind: "init",location: location() };
     }
   / GetToken __ key:PropertyName __
     "(" __ ")" __
@@ -577,7 +577,7 @@ PropertyAssignment
           params: [],
           body: body
         },
-        kind: "get"
+        kind: "get",location: location()
       };
     }
   / SetToken __ key:PropertyName __
@@ -593,7 +593,7 @@ PropertyAssignment
           params: params,
           body: body
         },
-        kind: "set"
+        kind: "set",location: location()
       };
     }
 
@@ -611,18 +611,18 @@ MemberExpression
       / FunctionExpression
       / value:$(UnicodeDigit+){return {
             "type": "Literal",
-            "value": Number(value)
+            "value": Number(value),location: location()
         }}
       / NewToken __ callee:MemberExpression __ args:Arguments {
-          return { type: "NewExpression", callee: callee, arguments: args };
+          return { type: "NewExpression", callee: callee, arguments: args,location: location() };
         }
     )
     tail:(
         __ "[" __ property:Expression __ "]" {
-          return { property: property, computed: true };
+          return { property: property, computed: true,location: location() };
         }
       / __ "." __ property:IdentifierName {
-          return { property: property, computed: false };
+          return { property: property, computed: false,location: location() };
         }
     )*
     {
@@ -631,7 +631,7 @@ MemberExpression
           type: "MemberExpression",
           object: result,
           property: element.property,
-          computed: element.computed
+          computed: element.computed,location: location()
         };
       }, head);
     }
@@ -640,31 +640,31 @@ MemberExpression
 NewExpression
   = MemberExpression
   / NewToken __ callee:NewExpression {
-      return { type: "NewExpression", callee: callee, arguments: [] };
+      return { type: "NewExpression", callee: callee, arguments: [],location: location() };
     }
 
 CallExpression
   = head:(
       callee:MemberExpression __ args:Arguments {
-        return { type: "CallExpression", callee: callee, arguments: args };
+        return { type: "CallExpression", callee: callee, arguments: args,location: location() };
       }
     )
     tail:(
         __ args:Arguments {
-          return { type: "CallExpression", arguments: args };
+          return { type: "CallExpression", arguments: args,location: location() };
         }
       / __ "[" __ property:Expression __ "]" {
           return {
             type: "MemberExpression",
             property: property,
-            computed: true
+            computed: true,location: location()
           };
         }
       / __ "." __ property:IdentifierName {
           return {
             type: "MemberExpression",
             property: property,
-            computed: false
+            computed: false,location: location()
           };
         }
     )*
@@ -688,7 +688,7 @@ ArgumentList
 ArgumentWithName =identifier:ArgumentName? __ argument:AssignmentExpressions{
     return {
         ...argument,
-        NIWANGO_Identifier:identifier||undefined
+        NIWANGO_Identifier:identifier||undefined,location: location()
     }
 }
 AssignmentExpressions
@@ -699,7 +699,7 @@ AssignmentExpressions
         return {
         type: "BlockStatement",
         __type: "AssignmentExpressions",
-        body: list
+        body: list,location: location()
       };
     }
     return {
@@ -721,7 +721,7 @@ PostfixExpression
         type: "UpdateExpression",
         operator: operator,
         argument: argument,
-        prefix: false
+        prefix: false,location: location()
       };
     }
   / LeftHandSideExpression
@@ -741,7 +741,7 @@ UnaryExpression
         type: type,
         operator: operator,
         argument: argument,
-        prefix: true
+        prefix: true,location: location()
       };
     }
 
@@ -901,7 +901,7 @@ ConditionalExpression
         type: "ConditionalExpression",
         test: test,
         consequent: consequent,
-        alternate: alternate
+        alternate: alternate,location: location()
       };
     }
   / LogicalORExpression
@@ -915,7 +915,7 @@ ConditionalExpressionNoIn
         type: "ConditionalExpression",
         test: test,
         consequent: consequent,
-        alternate: alternate
+        alternate: alternate,location: location()
       };
     }
   / LogicalORExpressionNoIn
@@ -929,7 +929,7 @@ AssignmentExpression
         type: "AssignmentExpression",
         operator: "=",
         left: left,
-        right: right
+        right: right,location: location()
       };
     }
   / left:LeftHandSideExpression __
@@ -945,7 +945,7 @@ AssignmentExpression
             init: right
           }
         ],
-        kind: "var"
+        kind: "var",location: location()
       }
     }
   / left:LeftHandSideExpression __
@@ -956,7 +956,7 @@ AssignmentExpression
         type: "AssignmentExpression",
         operator: operator,
         left: left,
-        right: right
+        right: right,location: location()
       };
     }
   / ConditionalExpression
@@ -971,7 +971,7 @@ AssignmentExpressionNoIn
         type: "AssignmentExpression",
         operator: "=",
         left: left,
-        right: right
+        right: right,location: location()
       };
     }
   / left:LeftHandSideExpression __
@@ -982,7 +982,7 @@ AssignmentExpressionNoIn
         type: "AssignmentExpression",
         operator: operator,
         left: left,
-        right: right
+        right: right,location: location()
       };
     }
   / ConditionalExpressionNoIn
@@ -1035,14 +1035,14 @@ Block
       return {
         type: "BlockStatement",
         __type: "Block1",
-        body: optionalList(extractOptional(body, 0))
+        body: optionalList(extractOptional(body, 0)),location: location()
       };
     }
   / "{" __ body:(StatementList __)? "}" {
       return {
         type: "BlockStatement",
         __type: "Block2",
-        body: optionalList(extractOptional(body, 0))
+        body: optionalList(extractOptional(body, 0)),location: location()
       };
     }
 StatementList
@@ -1053,7 +1053,7 @@ VariableStatement
       return {
         type: "VariableDeclaration",
         declarations: declarations,
-        kind: "var"
+        kind: "var",location: location()
       };
     }
 
@@ -1072,7 +1072,7 @@ VariableDeclaration
       return {
         type: "VariableDeclarator",
         id: id,
-        init: extractOptional(init, 1)
+        init: extractOptional(init, 1),location: location()
       };
     }
 
@@ -1081,7 +1081,7 @@ VariableDeclarationNoIn
       return {
         type: "VariableDeclarator",
         id: id,
-        init: extractOptional(init, 1)
+        init: extractOptional(init, 1),location: location()
       };
     }
 
@@ -1092,45 +1092,45 @@ initializerNoIn
   = "=" !"=" __ expression:AssignmentExpressionNoIn { return expression; }
 
 EmptyStatement
-  = ";" { return { type: "EmptyStatement" }; }
+  = ";" { return { type: "EmptyStatement" ,location: location()}; }
 
 ExpressionStatement
   = !("{" / FunctionToken) expression:Expression EOS {
       return {
         type: "ExpressionStatement",
-        expression: expression
+        expression: expression,location: location()
       };
     }
 
 
 ContinueStatement
   = ContinueToken EOS {
-      return { type: "ContinueStatement", label: null };
+      return { type: "ContinueStatement", label: null,location: location() };
     }
   / ContinueToken _ label:Identifier EOS {
-      return { type: "ContinueStatement", label: label };
+      return { type: "ContinueStatement", label: label,location: location() };
     }
 
 BreakStatement
   = BreakToken EOS {
-      return { type: "BreakStatement", label: null };
+      return { type: "BreakStatement", label: null,location: location() };
     }
   / BreakToken _ label:Identifier EOS {
-      return { type: "BreakStatement", label: label };
+      return { type: "BreakStatement", label: label,location: location() };
     }
 
 ReturnStatement
   = ReturnToken EOS {
-      return { type: "ReturnStatement", argument: null };
+      return { type: "ReturnStatement", argument: null,location: location() };
     }
   / ReturnToken _ argument:Expression EOS {
-      return { type: "ReturnStatement", argument: argument };
+      return { type: "ReturnStatement", argument: argument,location: location() };
     }
 
 WithStatement
   = WithToken __ "(" __ object:Expression __ ")" __
     body:Statement
-    { return { type: "WithStatement", object: object, body: body }; }
+    { return { type: "WithStatement", object: object, body: body,location: location() }; }
 
 
 CaseBlock
@@ -1155,7 +1155,7 @@ CaseClause
       return {
         type: "SwitchCase",
         test: test,
-        consequent: optionalList(extractOptional(consequent, 1))
+        consequent: optionalList(extractOptional(consequent, 1)),location: location()
       };
     }
 
@@ -1164,18 +1164,18 @@ DefaultClause
       return {
         type: "SwitchCase",
         test: null,
-        consequent: optionalList(extractOptional(consequent, 1))
+        consequent: optionalList(extractOptional(consequent, 1)),location: location()
       };
     }
 
 LabelledStatement
   = label:Identifier __ ":" __ body:Statement {
-      return { type: "LabeledStatement", label: label, body: body };
+      return { type: "LabeledStatement", label: label, body: body,location: location() };
     }
 
 ThrowStatement
   = ThrowToken _ argument:Expression EOS {
-      return { type: "ThrowStatement", argument: argument };
+      return { type: "ThrowStatement", argument: argument,location: location() };
     }
 
 TryStatement
@@ -1184,7 +1184,7 @@ TryStatement
         type: "TryStatement",
         block: block,
         handler: handler,
-        finalizer: finalizer
+        finalizer: finalizer,location: location()
       };
     }
   / TryToken __ block:Block __ handler:Catch {
@@ -1192,7 +1192,7 @@ TryStatement
         type: "TryStatement",
         block: block,
         handler: handler,
-        finalizer: null
+        finalizer: null,location: location()
       };
     }
   / TryToken __ block:Block __ finalizer:Finally {
@@ -1200,7 +1200,7 @@ TryStatement
         type: "TryStatement",
         block: block,
         handler: null,
-        finalizer: finalizer
+        finalizer: finalizer,location: location()
       };
     }
 
@@ -1209,7 +1209,7 @@ Catch
       return {
         type: "CatchClause",
         param: param,
-        body: body
+        body: body,location: location()
       };
     }
 
@@ -1217,7 +1217,7 @@ Finally
   = FinallyToken __ block:Block { return block; }
 
 DebuggerStatement
-  = DebuggerToken EOS { return { type: "DebuggerStatement" }; }
+  = DebuggerToken EOS { return { type: "DebuggerStatement",location: location() }; }
 
 // ----- A.5 Functions and Programs -----
 
@@ -1230,7 +1230,7 @@ FunctionDeclaration
         type: "FunctionDeclaration",
         id: id,
         params: optionalList(extractOptional(params, 0)),
-        body: body
+        body: body,location: location()
       };
     }
 
@@ -1243,7 +1243,7 @@ FunctionExpression
         type: "FunctionExpression",
         id: extractOptional(id, 0),
         params: optionalList(extractOptional(params, 0)),
-        body: body
+        body: body,location: location()
       };
     }
 
@@ -1256,7 +1256,7 @@ LambdaExpression1
   = LambdaToken2 __ "(" __ body:FunctionBody __ ")"{
     return {
       type: "LambdaExpression",
-      body
+      body,location: location()
     }
   }
 
@@ -1265,7 +1265,7 @@ LambdaExpression2
   = LambdaToken1 __ "(" __ body:FunctionBody __ ")"{
     return {
       type: "LambdaExpression",
-      body
+      body,location: location()
     }
   }
 
@@ -1273,7 +1273,7 @@ LambdaExpression3
   = LambdaToken2 body:SourceElement {
     return {
       type: "LambdaExpression",
-      body
+      body,location: location()
     }
   }
 
@@ -1287,7 +1287,7 @@ FunctionBody
       return {
         type: "BlockStatement",
         __type: "FunctionBody",
-        body: optionalList(body)
+        body: optionalList(body),location: location()
       };
     }
 
@@ -1295,7 +1295,8 @@ Program
   = body:SourceElements? {
       return {
         type: "Program",
-        body: optionalList(body)
+        body: optionalList(body),
+        location: location()
       };
     }
 
