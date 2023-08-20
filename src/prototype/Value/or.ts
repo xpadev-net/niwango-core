@@ -1,7 +1,7 @@
 import { A_ANY } from "@/@types";
-import { execute, resolvePrototype } from "@/context";
-import { getType } from "@/prototype/getType";
+import { execute } from "@/context";
 import { PrototypeValueFunction } from "@/prototype/Value/index";
+import { format } from "@/utils/format";
 
 const processOr: PrototypeValueFunction = (
   script,
@@ -9,9 +9,7 @@ const processOr: PrototypeValueFunction = (
   object,
   trace: A_ANY[]
 ) => {
-  const toASBoolean = resolvePrototype(getType(object), "toASBoolean");
-  if (!toASBoolean) throw new Error();
-  if (toASBoolean(script, scopes, object, trace)) {
+  if (format(object, "boolean")) {
     return object;
   }
   return execute(script.arguments[0], scopes, trace);

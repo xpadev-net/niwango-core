@@ -1,6 +1,7 @@
 import { A_ANY } from "@/@types";
 import { execute } from "@/context";
 import { PrototypeStringFunction } from "@/prototype/String/index";
+import { format } from "@/utils/format";
 
 const processIndex: PrototypeStringFunction = (
   script,
@@ -9,7 +10,7 @@ const processIndex: PrototypeStringFunction = (
   trace: A_ANY[]
 ) => {
   const index = execute(script.arguments[0], scopes, trace);
-  return object[Number(index)];
+  return object[format(index, "number")];
 };
 
 export { processIndex };

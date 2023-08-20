@@ -1,17 +1,8 @@
-import { A_ANY } from "@/@types";
-import { resolvePrototype } from "@/context";
-import { getType } from "@/prototype/getType";
 import { PrototypeValueFunction } from "@/prototype/Value/index";
+import { format } from "@/utils/format";
 
-const processNot: PrototypeValueFunction = (
-  script,
-  scopes,
-  object,
-  trace: A_ANY[]
-) => {
-  const toASBoolean = resolvePrototype(getType(object), "toASBoolean");
-  if (!toASBoolean) throw new Error();
-  return !toASBoolean(script, scopes, object, trace);
+const processNot: PrototypeValueFunction = (_script, _scopes, object) => {
+  return !format(object, "boolean");
 };
 
 export { processNot };

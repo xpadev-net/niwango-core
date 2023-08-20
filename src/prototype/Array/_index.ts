@@ -1,5 +1,6 @@
 import { execute } from "@/context";
 import { PrototypeArrayFunction } from "@/prototype/Array/index";
+import { format } from "@/utils/format";
 
 const processIndex: PrototypeArrayFunction = (
   script,
@@ -11,7 +12,7 @@ const processIndex: PrototypeArrayFunction = (
   if (typeof index === "number") {
     return object[index];
   }
-  return object[Number(index)];
+  return object[format(index, "number")];
 };
 
 export { processIndex };

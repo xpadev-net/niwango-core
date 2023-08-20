@@ -1,20 +1,16 @@
-import { resolvePrototype } from "@/context";
-import { PrototypeArrayFunction } from "@/prototype/Array/index";
-import { getType } from "@/prototype/getType";
+import { PrototypeArrayFunction } from "@/prototype/Array";
+import { format } from "@/utils/format";
 
 const processToASString: PrototypeArrayFunction = (
-  script,
-  scopes,
-  object,
-  trace
+  _script,
+  _scopes,
+  object
 ) => {
   return (
     "<[" +
     object
       .map((val) => {
-        const toASString = resolvePrototype(getType(val), "toASString");
-        if (!toASString) throw new Error();
-        return toASString(script, scopes, val, trace);
+        return format(val, "string");
       })
       .join(",") +
     "]>"

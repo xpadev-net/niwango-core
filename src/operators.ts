@@ -1,3 +1,5 @@
+import { format } from "@/utils/format";
+
 /**
  * 掛け算処理
  * 文字列に数値を掛けた場合は、文字列を繰り返す
@@ -6,9 +8,9 @@
  */
 const Multiplication = (left: unknown, right: unknown) => {
   if (typeof left === "string") {
-    return left.repeat(Number(right));
+    return left.repeat(format(right, "number"));
   }
-  return Number(left) * Number(right);
+  return format(left, "number") * format(right, "number");
 };
 
 /**
@@ -17,7 +19,15 @@ const Multiplication = (left: unknown, right: unknown) => {
  * @param right
  */
 const Subtraction = (left: unknown, right: unknown) => {
-  return Number(left) - Number(right);
+  const rightNum = format(right, "number");
+  if (
+    rightNum === 0 &&
+    typeof left === "string" &&
+    left.match(/^(0|0x)?[0-9]+(\.[0-9]+)?$/)
+  ) {
+    return Number(left);
+  }
+  return format(left, "number") - rightNum;
 };
 
 /**
@@ -27,9 +37,9 @@ const Subtraction = (left: unknown, right: unknown) => {
  */
 const Addition = (left: unknown, right: unknown) => {
   if (typeof left === "string" || typeof right === "string") {
-    return `${left}${right}`;
+    return `${format(left, "string")}${format(right, "string")}`;
   }
-  return Number(left) + Number(right);
+  return format(left, "number") + format(right, "number");
 };
 
 /**
@@ -42,7 +52,7 @@ const LessThan = (left: unknown, right: unknown) => {
   if (typeof left === "string" && typeof right === "string") {
     return left < right;
   }
-  return Number(left) < Number(right);
+  return format(left, "number") < format(right, "number");
 };
 
 /**
@@ -55,7 +65,7 @@ const GreaterThan = (left: unknown, right: unknown) => {
   if (typeof left === "string" && typeof right === "string") {
     return left > right;
   }
-  return Number(left) > Number(right);
+  return format(left, "number") > format(right, "number");
 };
 
 /**
@@ -68,7 +78,7 @@ const LessThanOrEqual = (left: unknown, right: unknown) => {
   if (typeof left === "string" && typeof right === "string") {
     return left <= right;
   }
-  return Number(left) <= Number(right);
+  return format(left, "number") <= format(right, "number");
 };
 
 /**
@@ -81,7 +91,7 @@ const GreaterThanOrEqual = (left: unknown, right: unknown) => {
   if (typeof left === "string" && typeof right === "string") {
     return left >= right;
   }
-  return Number(left) >= Number(right);
+  return format(left, "number") >= format(right, "number");
 };
 
 /**
@@ -91,7 +101,7 @@ const GreaterThanOrEqual = (left: unknown, right: unknown) => {
  * @constructor
  */
 const Division = (left: unknown, right: unknown) => {
-  return Number(left) / Number(right);
+  return format(left, "number") / format(right, "number");
 };
 
 /**
@@ -101,7 +111,7 @@ const Division = (left: unknown, right: unknown) => {
  * @constructor
  */
 const Remainder = (left: unknown, right: unknown) => {
-  return Number(left) % Number(right);
+  return format(left, "number") % format(right, "number");
 };
 
 /**
@@ -111,7 +121,7 @@ const Remainder = (left: unknown, right: unknown) => {
  * @constructor
  */
 const Exponentiation = (left: unknown, right: unknown) => {
-  return Number(left) ** Number(right);
+  return format(left, "number") ** format(right, "number");
 };
 
 /**
@@ -121,7 +131,7 @@ const Exponentiation = (left: unknown, right: unknown) => {
  * @constructor
  */
 const BitwiseAND = (left: unknown, right: unknown) => {
-  return Number(left) & Number(right);
+  return format(left, "number") & format(right, "number");
 };
 
 /**
@@ -131,7 +141,7 @@ const BitwiseAND = (left: unknown, right: unknown) => {
  * @constructor
  */
 const BitwiseOR = (left: unknown, right: unknown) => {
-  return Number(left) | Number(right);
+  return format(left, "number") | format(right, "number");
 };
 
 /**
@@ -141,7 +151,7 @@ const BitwiseOR = (left: unknown, right: unknown) => {
  * @constructor
  */
 const BitwiseXOR = (left: unknown, right: unknown) => {
-  return Number(left) ^ Number(right);
+  return format(left, "number") ^ format(right, "number");
 };
 
 /**
@@ -150,7 +160,7 @@ const BitwiseXOR = (left: unknown, right: unknown) => {
  * @constructor
  */
 const BitwiseNOT = (value: unknown) => {
-  return ~Number(value);
+  return ~format(value, "number");
 };
 
 /**
@@ -160,7 +170,7 @@ const BitwiseNOT = (value: unknown) => {
  * @constructor
  */
 const LeftShift = (left: unknown, right: unknown) => {
-  return Number(left) << Number(right);
+  return format(left, "number") << format(right, "number");
 };
 
 /**
@@ -170,7 +180,7 @@ const LeftShift = (left: unknown, right: unknown) => {
  * @constructor
  */
 const RightShift = (left: unknown, right: unknown) => {
-  return Number(left) >> Number(right);
+  return format(left, "number") >> format(right, "number");
 };
 
 /**
@@ -180,7 +190,7 @@ const RightShift = (left: unknown, right: unknown) => {
  * @constructor
  */
 const UnsignedRightShift = (left: unknown, right: unknown) => {
-  return Number(left) >>> Number(right);
+  return format(left, "number") >>> format(right, "number");
 };
 
 /**
@@ -189,7 +199,7 @@ const UnsignedRightShift = (left: unknown, right: unknown) => {
  * @constructor
  */
 const UnaryNegation = (value: unknown) => {
-  return -Number(value);
+  return -format(value, "number");
 };
 
 /**
@@ -198,7 +208,7 @@ const UnaryNegation = (value: unknown) => {
  * @constructor
  */
 const UnaryPlus = (value: unknown) => {
-  return Number(value);
+  return format(value, "number");
 };
 
 /**
@@ -221,8 +231,8 @@ const Compare = (left: unknown, right: unknown) => {
     if (left > right) return 1;
     return 0;
   }
-  const leftNumber = Number(left);
-  const rightNumber = Number(right);
+  const leftNumber = format(left, "number");
+  const rightNumber = format(right, "number");
   if (leftNumber < rightNumber) return -1;
   if (leftNumber > rightNumber) return 1;
   return 0;

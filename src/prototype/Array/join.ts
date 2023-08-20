@@ -1,6 +1,7 @@
 import { A_ANY } from "@/@types";
 import { execute } from "@/context";
 import { PrototypeArrayFunction } from "@/prototype/Array/index";
+import { format } from "@/utils/format";
 
 const processJoin: PrototypeArrayFunction = (
   script,
@@ -10,7 +11,7 @@ const processJoin: PrototypeArrayFunction = (
 ) => {
   const separator = execute(script.arguments[0], scopes, trace);
   if (typeof separator !== "undefined") {
-    return object.join(`${separator}`);
+    return object.join(format(separator, "string"));
   }
   return object.join("");
 };

@@ -1,6 +1,7 @@
 import { A_ANY, A_CallExpression, T_scope } from "@/@types/ast";
 import { IrFunction } from "@/@types/functions";
 import { argumentParser } from "@/context";
+import { format } from "@/utils/format";
 
 const processDistance: IrFunction = (
   script: A_CallExpression,
@@ -15,8 +16,8 @@ const processDistance: IrFunction = (
     trace
   );
   return Math.sqrt(
-    Math.pow(Number(args.x2) - Number(args.x1), 2) +
-      Math.pow(Number(args.y2) - Number(args.y1), 2)
+    Math.pow(format(args.x2, "number") - format(args.x1, "number"), 2) +
+      Math.pow(format(args.y2, "number") - format(args.y1, "number"), 2)
   );
 };
 

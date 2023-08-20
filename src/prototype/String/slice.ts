@@ -1,6 +1,7 @@
 import { A_ANY } from "@/@types";
 import { execute } from "@/context";
 import { PrototypeStringFunction } from "@/prototype/String/index";
+import { format } from "@/utils/format";
 
 const processSlice: PrototypeStringFunction = (
   script,
@@ -12,11 +13,11 @@ const processSlice: PrototypeStringFunction = (
   const length = execute(script.arguments[1], scopes, trace);
   if (typeof length !== "undefined") {
     return object.slice(
-      Number(startIndex),
-      Number(startIndex) + Number(length)
+      format(startIndex, "number"),
+      format(startIndex, "number") + format(length, "number")
     );
   }
-  return object.slice(Number(startIndex));
+  return object.slice(format(startIndex, "number"));
 };
 
 export { processSlice };
