@@ -1,6 +1,6 @@
 import { A_ANY } from "@/@types";
 import { definedFunction } from "@/@types/function";
-import { getName } from "@/context";
+import { assign, getName } from "@/context";
 import { InvalidTypeError } from "@/errors/InvalidTypeError";
 import typeGuard from "@/typeGuard";
 
@@ -34,6 +34,19 @@ const processDef: PrototypeObjectFunction = (
   })();
   if (typeof functionName !== "string") {
     throw new InvalidTypeError("function name must be string", script, scopes);
+  }
+  if (functionName === "call" && typeGuard.MemberExpression(script.callee)) {
+    assign(
+      script.callee.object,
+      {
+        type: "definedFunction",
+        isKari: false,
+        script,
+      } as definedFunction,
+      scopes,
+      trace
+    );
+    return;
   }
   object[functionName] = {
     type: "definedFunction",
