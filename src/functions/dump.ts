@@ -17,14 +17,11 @@ const processDump: IrFunction = (
   _object,
   trace: A_ANY[]
 ) => {
+  const arr = [];
   for (const argument of script.arguments) {
-    console.debug(
-      "%cdump",
-      "background:green;",
-      execute(argument, scopes, trace),
-      trace
-    );
+    arr.push(execute(argument, scopes, trace));
   }
+  console.debug("%cdump", "background:green;", ...arr, trace);
 };
 
 export { processDump };
