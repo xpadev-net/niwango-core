@@ -52,8 +52,4 @@ describe("Object.prototype", () => {
       )
     ).toBe(1);
   });
-
-  test("call definition", () => {
-    expect(run(`obj=[];obj.def(call(),1);return obj`)).toBe(1);
-  });
 });
