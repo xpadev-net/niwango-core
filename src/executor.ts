@@ -4,6 +4,8 @@ import { resultHook, setExecute } from "@/context";
 import { NotImplementedError } from "@/errors/NotImplementedError";
 import { processors } from "@/processors";
 import typeGuard from "@/typeGuard";
+import { config } from "@/config";
+import { TooMuchRecursionError } from "@/errors/TooMuchRecursionError";
 
 /**
  * ASTを実行する関数
@@ -17,6 +19,9 @@ const execute: Execute = (
   trace: A_ANY[]
 ): unknown => {
   if (!script || !typeGuard.AST(script)) return;
+  if (config.recursionLimit && trace.length > config.recursionLimit) {
+    throw new TooMuchRecursionError(script, scopes);
+  }
   let result: unknown = undefined;
   trace = [...trace, script];
   try {

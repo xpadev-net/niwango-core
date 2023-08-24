@@ -6,4 +6,5 @@ export type baseConfig = {
   stageHeight: number;
   canvasWidth: number;
   canvasHeight: number;
+  recursionLimit?: number;
 };
