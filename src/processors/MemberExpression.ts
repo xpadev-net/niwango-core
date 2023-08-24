@@ -67,7 +67,7 @@ const processMemberExpression = (
         },
         arguments: [],
       },
-      scopes,
+      [{ self: left }, ...scopes],
       trace
     );
   } catch (e) {
