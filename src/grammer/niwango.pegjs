@@ -607,7 +607,8 @@ PropertySetParameterList
 
 MemberExpression
   = head:(
-        PrimaryExpression
+        Block
+      / PrimaryExpression
       / FunctionExpression
       / value:$(UnicodeDigit+){return {
             "type": "Literal",
@@ -616,7 +617,6 @@ MemberExpression
       / NewToken __ callee:MemberExpression __ args:Arguments {
           return { type: "NewExpression", callee: callee, arguments: args,location: location() };
         }
-      / Block
     )
     tail:(
         __ "[" __ property:Expression __ "]" {
@@ -1019,8 +1019,7 @@ ExpressionNoIn
 // ----- A.4 Statements -----
 
 Statement
-  = Block
-  / VariableStatement
+  = VariableStatement
   / EmptyStatement
   / ExpressionStatement
   / ContinueStatement
@@ -1031,6 +1030,7 @@ Statement
   / ThrowStatement
   / TryStatement
   / DebuggerStatement
+  / Block
 
 Block
   = "(" __ body:(StatementList __)? ")" {
