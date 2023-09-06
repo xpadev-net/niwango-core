@@ -616,6 +616,7 @@ MemberExpression
       / NewToken __ callee:MemberExpression __ args:Arguments {
           return { type: "NewExpression", callee: callee, arguments: args,location: location() };
         }
+      / Block
     )
     tail:(
         __ "[" __ property:Expression __ "]" {
@@ -706,6 +707,7 @@ AssignmentExpressions
         ...list[0]
     }
 }
+ / Block
 
 ArgumentName = identifier:Identifier":"!"="{return identifier}
 LeftHandSideExpression
