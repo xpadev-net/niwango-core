@@ -607,7 +607,8 @@ PropertySetParameterList
 
 MemberExpression
   = head:(
-        PrimaryExpression
+        BracketsBlock
+      / PrimaryExpression
       / FunctionExpression
       / value:$(UnicodeDigit+){return {
             "type": "Literal",
@@ -616,7 +617,6 @@ MemberExpression
       / NewToken __ callee:MemberExpression __ args:Arguments {
           return { type: "NewExpression", callee: callee, arguments: args,location: location() };
         }
-      / Block
     )
     tail:(
         __ "[" __ property:Expression __ "]" {
@@ -1019,8 +1019,7 @@ ExpressionNoIn
 // ----- A.4 Statements -----
 
 Statement
-  = Block
-  / VariableStatement
+  = VariableStatement
   / EmptyStatement
   / ExpressionStatement
   / ContinueStatement
@@ -1031,22 +1030,30 @@ Statement
   / ThrowStatement
   / TryStatement
   / DebuggerStatement
+  / Block
 
 Block
+  = BracketsBlock
+  / BracesBlock
+
+BracketsBlock
   = "(" __ body:(StatementList __)? ")" {
-      return {
-        type: "BlockStatement",
-        __type: "Block1",
-        body: optionalList(extractOptional(body, 0)),location: location()
-      };
-    }
-  / "{" __ body:(StatementList __)? "}" {
-      return {
-        type: "BlockStatement",
-        __type: "Block2",
-        body: optionalList(extractOptional(body, 0)),location: location()
-      };
-    }
+    return {
+      type: "BlockStatement",
+      __type: "BracketsBlock",
+      body: optionalList(extractOptional(body, 0)),location: location()
+    };
+  }
+
+BracesBlock
+  = "{" __ body:(StatementList __)? "}" {
+    return {
+      type: "BlockStatement",
+      __type: "BracesBlock",
+      body: optionalList(extractOptional(body, 0)),location: location()
+    };
+  }
+
 StatementList
   = head:Statement tail:(__ Statement)* { return buildList(head, tail, 1); }
 
