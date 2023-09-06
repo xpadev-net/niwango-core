@@ -6855,50 +6855,44 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
-    s1 = peg$parseBlock();
+    s1 = peg$parsePrimaryExpression();
     if (s1 === peg$FAILED) {
-      s1 = peg$parsePrimaryExpression();
+      s1 = peg$parseFunctionExpression();
       if (s1 === peg$FAILED) {
-        s1 = peg$parseFunctionExpression();
+        s1 = peg$currPos;
+        s2 = peg$currPos;
+        s3 = [];
+        s4 = peg$parseUnicodeDigit();
+        if (s4 !== peg$FAILED) {
+          while (s4 !== peg$FAILED) {
+            s3.push(s4);
+            s4 = peg$parseUnicodeDigit();
+          }
+        } else {
+          s3 = peg$FAILED;
+        }
+        if (s3 !== peg$FAILED) {
+          s2 = input.substring(s2, peg$currPos);
+        } else {
+          s2 = s3;
+        }
+        if (s2 !== peg$FAILED) {
+          peg$savedPos = s1;
+          s2 = peg$f51(s2);
+        }
+        s1 = s2;
         if (s1 === peg$FAILED) {
           s1 = peg$currPos;
-          s2 = peg$currPos;
-          s3 = [];
-          s4 = peg$parseUnicodeDigit();
-          if (s4 !== peg$FAILED) {
-            while (s4 !== peg$FAILED) {
-              s3.push(s4);
-              s4 = peg$parseUnicodeDigit();
-            }
-          } else {
-            s3 = peg$FAILED;
-          }
-          if (s3 !== peg$FAILED) {
-            s2 = input.substring(s2, peg$currPos);
-          } else {
-            s2 = s3;
-          }
+          s2 = peg$parseNewToken();
           if (s2 !== peg$FAILED) {
-            peg$savedPos = s1;
-            s2 = peg$f51(s2);
-          }
-          s1 = s2;
-          if (s1 === peg$FAILED) {
-            s1 = peg$currPos;
-            s2 = peg$parseNewToken();
-            if (s2 !== peg$FAILED) {
-              s3 = peg$parse__();
-              s4 = peg$parseMemberExpression();
-              if (s4 !== peg$FAILED) {
-                s5 = peg$parse__();
-                s6 = peg$parseArguments();
-                if (s6 !== peg$FAILED) {
-                  peg$savedPos = s1;
-                  s1 = peg$f52(s4, s6);
-                } else {
-                  peg$currPos = s1;
-                  s1 = peg$FAILED;
-                }
+            s3 = peg$parse__();
+            s4 = peg$parseMemberExpression();
+            if (s4 !== peg$FAILED) {
+              s5 = peg$parse__();
+              s6 = peg$parseArguments();
+              if (s6 !== peg$FAILED) {
+                peg$savedPos = s1;
+                s1 = peg$f52(s4, s6);
               } else {
                 peg$currPos = s1;
                 s1 = peg$FAILED;
@@ -6907,6 +6901,12 @@ function peg$parse(input, options) {
               peg$currPos = s1;
               s1 = peg$FAILED;
             }
+          } else {
+            peg$currPos = s1;
+            s1 = peg$FAILED;
+          }
+          if (s1 === peg$FAILED) {
+            s1 = peg$parseBlock();
           }
         }
       }
@@ -10635,29 +10635,29 @@ function peg$parse(input, options) {
       return cached.result;
     }
 
-    s0 = peg$parseVariableStatement();
+    s0 = peg$parseBlock();
     if (s0 === peg$FAILED) {
-      s0 = peg$parseEmptyStatement();
+      s0 = peg$parseVariableStatement();
       if (s0 === peg$FAILED) {
-        s0 = peg$parseExpressionStatement();
+        s0 = peg$parseEmptyStatement();
         if (s0 === peg$FAILED) {
-          s0 = peg$parseContinueStatement();
+          s0 = peg$parseExpressionStatement();
           if (s0 === peg$FAILED) {
-            s0 = peg$parseBreakStatement();
+            s0 = peg$parseContinueStatement();
             if (s0 === peg$FAILED) {
-              s0 = peg$parseReturnStatement();
+              s0 = peg$parseBreakStatement();
               if (s0 === peg$FAILED) {
-                s0 = peg$parseWithStatement();
+                s0 = peg$parseReturnStatement();
                 if (s0 === peg$FAILED) {
-                  s0 = peg$parseLabelledStatement();
+                  s0 = peg$parseWithStatement();
                   if (s0 === peg$FAILED) {
-                    s0 = peg$parseThrowStatement();
+                    s0 = peg$parseLabelledStatement();
                     if (s0 === peg$FAILED) {
-                      s0 = peg$parseTryStatement();
+                      s0 = peg$parseThrowStatement();
                       if (s0 === peg$FAILED) {
-                        s0 = peg$parseDebuggerStatement();
+                        s0 = peg$parseTryStatement();
                         if (s0 === peg$FAILED) {
-                          s0 = peg$parseBlock();
+                          s0 = peg$parseDebuggerStatement();
                         }
                       }
                     }
