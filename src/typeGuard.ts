@@ -16,7 +16,6 @@ import {
   A_MemberExpression,
   A_ObjectExpression,
   A_Program,
-  A_ReturnStatement,
   A_SequenceExpression,
   A_UnaryExpression,
   A_UpdateExpression,
@@ -65,8 +64,6 @@ const typeGuard = {
     !!i && typeof i === "object" && (i as A_ANY).type === "ObjectExpression",
   Program: (i: unknown): i is A_Program =>
     !!i && typeof i === "object" && (i as A_ANY).type === "Program",
-  ReturnStatement: (i: unknown): i is A_ReturnStatement =>
-    !!i && typeof i === "object" && (i as A_ANY).type === "ReturnStatement",
   SequenceExpression: (i: unknown): i is A_SequenceExpression =>
     !!i && typeof i === "object" && (i as A_ANY).type === "SequenceExpression",
   UnaryExpression: (i: unknown): i is A_UnaryExpression =>
