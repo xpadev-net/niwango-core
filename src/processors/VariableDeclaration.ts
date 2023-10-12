@@ -21,15 +21,20 @@ const processVariableDeclaration = (
   let lastItem;
   for (const item of script.declarations) {
     if (item.init === null) {
-      return execute(
-        {
-          type: "CallExpression",
-          callee: item.id,
-          arguments: [],
-        } as A_CallExpression,
-        scopes,
-        trace
-      );
+      try {
+        return execute(
+          {
+            type: "CallExpression",
+            callee: item.id,
+            arguments: [],
+          } as A_CallExpression,
+          scopes,
+          trace,
+          { catch: false }
+        );
+      } catch (e) {
+        return execute(item.id, scopes, trace);
+      }
     } else {
       if (scopes[0]) {
         lastItem = scopes[0][getName(item.id, scopes, trace) as string] =
