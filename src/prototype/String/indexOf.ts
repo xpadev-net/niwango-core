@@ -7,7 +7,7 @@ const processIndexOf: PrototypeStringFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const searchValue = execute(script.arguments[0], scopes, trace);
   const fromIndex = execute(script.arguments[1], scopes, trace);

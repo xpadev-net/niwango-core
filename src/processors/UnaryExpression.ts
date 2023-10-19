@@ -11,7 +11,7 @@ import { BitwiseNOT, LogicalNot, UnaryNegation, UnaryPlus } from "@/operators";
 const processUnaryExpression = (
   script: A_UnaryExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const value = execute(script.argument, scopes, trace);
   if (script.operator === "-") {

@@ -7,7 +7,7 @@ const processOr: PrototypeValueFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   if (format(object, "boolean")) {
     return object;

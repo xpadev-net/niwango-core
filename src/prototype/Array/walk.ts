@@ -7,7 +7,7 @@ const processWalk: PrototypeArrayFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const processor = script.arguments[0];
   let result: unknown;

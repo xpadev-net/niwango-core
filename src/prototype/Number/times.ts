@@ -7,7 +7,7 @@ const processTimes: PrototypeNumberFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const body = script.arguments[0] as Argument<A_ANY>;
   let lastResult;

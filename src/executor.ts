@@ -18,7 +18,7 @@ const execute: Execute = (
   script: unknown,
   scopes: T_scope[],
   trace: A_ANY[],
-  options: Partial<{ catch: boolean }> = { catch: true }
+  options: Partial<{ catch: boolean }> = { catch: true },
 ): unknown => {
   if (!script || !typeGuard.AST(script)) return;
   if (config.recursionLimit && trace.length > config.recursionLimit) {

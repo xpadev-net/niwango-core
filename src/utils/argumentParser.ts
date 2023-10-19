@@ -14,7 +14,7 @@ const argumentParser: ArgumentParser = (
   scopes: T_scope[],
   keys: string[],
   trace: A_ANY[],
-  compute = true
+  compute = true,
 ): { [key: string]: unknown } => {
   const result: { [key: string]: unknown } = {};
   const nonKeyValues: Argument<A_ANY>[] = [];

@@ -6,7 +6,7 @@ const processWhileKari: PrototypeValueFunction = (
   script,
   scopes,
   _,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   let result: unknown;
   while (execute(script.arguments[0], scopes, trace) as boolean) {

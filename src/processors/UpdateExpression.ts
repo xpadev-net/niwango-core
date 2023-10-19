@@ -11,7 +11,7 @@ import { Addition, Subtraction } from "@/operators";
 const processUpdateExpression = (
   script: A_UpdateExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const value = execute(script.argument, scopes, trace);
   if (script.operator === "--") {

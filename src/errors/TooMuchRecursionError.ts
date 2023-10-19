@@ -10,7 +10,7 @@ class TooMuchRecursionError extends Error {
   constructor(
     ast: A_ANY,
     scopes: T_scope[],
-    options: { [key: string]: unknown } = {}
+    options: { [key: string]: unknown } = {},
   ) {
     super("TooMuchRecursionError", options);
     this.ASTName = ast.type;

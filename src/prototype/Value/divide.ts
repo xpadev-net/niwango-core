@@ -8,7 +8,7 @@ const processDivide: PrototypeValueFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const value = execute(script.arguments[0], scopes, trace);
   if (value === undefined)

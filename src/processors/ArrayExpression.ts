@@ -9,7 +9,7 @@ import { execute } from "@/context";
 const processArrayExpression = (
   script: A_ArrayExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   return script.elements.reduce((result, element) => {
     return [...result, execute(element, scopes, trace)];

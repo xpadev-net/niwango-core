@@ -14,7 +14,7 @@ const processDefKari: PrototypeObjectFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   if (!script.arguments[0]) {
     return;

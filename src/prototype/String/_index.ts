@@ -7,7 +7,7 @@ const processIndex: PrototypeStringFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const index = execute(script.arguments[0], scopes, trace);
   return object[format(index, "number")];

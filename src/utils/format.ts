@@ -16,7 +16,7 @@ type Map = {
 
 const format = <T extends "boolean" | "number" | "string">(
   value: unknown,
-  to: T
+  to: T,
 ): Map[T] => {
   const formatFunc = resolvePrototype(getType(value), funcMap[to]);
   if (!formatFunc) throw new Error();

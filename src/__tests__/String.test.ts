@@ -3,7 +3,7 @@ import { run } from "@/testUtils";
 describe("String.prototype", () => {
   test("basic", () => {
     expect(run(`a = "ニコニコ動画"; b = "で遊ぼう"; c = a + b;c`)).toBe(
-      "ニコニコ動画で遊ぼう"
+      "ニコニコ動画で遊ぼう",
     );
   });
 
@@ -25,7 +25,7 @@ describe("String.prototype", () => {
   test("indexOf", () => {
     expect(run(`'abcdef'.indexOf('d')`)).toBe(3);
     expect(run(`t1='abcdef';t2='d';check=(t1.indexOf(t2)>=0); check`)).toBe(
-      true
+      true,
     );
   });
 

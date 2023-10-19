@@ -12,7 +12,7 @@ const assign = (
   target: A_ANY,
   value: unknown,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   if (scopes.length < 1) {
     return;
@@ -36,7 +36,7 @@ const assign = (
           target,
           value,
           scopes,
-          trace
+          trace,
         );
         return;
       }
@@ -54,7 +54,7 @@ const assign = (
         target,
         value,
         scopes,
-        trace
+        trace,
       );
     }
   }
