@@ -4,10 +4,10 @@ import { parseScript } from "@/parser/parse";
 
 initCore();
 if (!globalThis.structuredClone) {
-  globalThis.structuredClone = function structuredClone(
-    objectToClone: unknown
+  globalThis.structuredClone = function structuredClone<T = unknown>(
+    objectToClone: T,
   ) {
-    return JSON.parse(JSON.stringify(objectToClone)) as unknown;
+    return JSON.parse(JSON.stringify(objectToClone)) as T;
   };
 }
 /**
