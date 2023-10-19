@@ -1,9 +1,4 @@
-import {
-  A_ANY,
-  A_CallExpression,
-  A_VariableDeclaration,
-  T_scope,
-} from "@/@types/ast";
+import { A_ANY, A_VariableDeclaration, T_scope } from "@/@types/ast";
 import { getName } from "@/context";
 import { execute } from "@/context";
 
@@ -21,15 +16,7 @@ const processVariableDeclaration = (
   let lastItem;
   for (const item of script.declarations) {
     if (item.init === null) {
-      return execute(
-        {
-          type: "CallExpression",
-          callee: item.id,
-          arguments: [],
-        } as A_CallExpression,
-        scopes,
-        trace
-      );
+      return execute(item.id, scopes, trace);
     } else {
       if (scopes[0]) {
         lastItem = scopes[0][getName(item.id, scopes, trace) as string] =

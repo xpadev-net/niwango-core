@@ -12,11 +12,13 @@ import { TooMuchRecursionError } from "@/errors/TooMuchRecursionError";
  * @param script
  * @param scopes
  * @param trace
+ * @param options
  */
 const execute: Execute = (
   script: unknown,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
+  options: Partial<{ catch: boolean }> = { catch: true }
 ): unknown => {
   if (!script || !typeGuard.AST(script)) return;
   if (config.recursionLimit && trace.length > config.recursionLimit) {
@@ -30,6 +32,7 @@ const execute: Execute = (
       result = processor(script, scopes, trace);
     }
   } catch (e) {
+    if (!options.catch) throw e;
     const n = e as NotImplementedError;
     console.log(n, n.ast, n.scopes);
     console.log("trace", trace);

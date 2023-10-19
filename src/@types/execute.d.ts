@@ -3,7 +3,8 @@ import type { A_ANY, Argument, T_scope } from "@/@types/ast";
 export type Execute = (
   script: unknown,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
+  options?: Partial<{ catch: boolean }>
 ) => unknown;
 export type Assign = (
   target: A_ANY,

@@ -14,7 +14,6 @@ import { processMemberExpression } from "@/processors/MemberExpression";
 import { processObjectExpression } from "@/processors/ObjectExpression";
 import { processProgram } from "@/processors/Program";
 import { processRaw } from "@/processors/Raw";
-import { processReturnStatement } from "@/processors/ReturnStatement";
 import { processSequenceExpression } from "@/processors/SequenceExpression";
 import { processUnaryExpression } from "@/processors/UnaryExpression";
 import { processUpdateExpression } from "@/processors/UpdateExpression";
@@ -39,7 +38,6 @@ export const processors: {
   MemberExpression: processMemberExpression,
   ObjectExpression: processObjectExpression,
   Program: processProgram,
-  ReturnStatement: processReturnStatement,
   SequenceExpression: processSequenceExpression,
   UnaryExpression: processUnaryExpression,
   UpdateExpression: processUpdateExpression,

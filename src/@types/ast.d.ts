@@ -16,7 +16,6 @@ export type A_ANY =
   | A_ObjectExpression
   | A_Program
   | A_Property
-  | A_ReturnStatement
   | A_SequenceExpression
   | A_UnaryExpression
   | A_UpdateExpression
@@ -142,10 +141,6 @@ export type A_Property = {
   type: "Property";
   key: A_ANY;
   value: A_ANY;
-};
-export type A_ReturnStatement = {
-  type: "ReturnStatement";
-  argument: A_ANY;
 };
 export type A_SequenceExpression = {
   type: "SequenceExpression";

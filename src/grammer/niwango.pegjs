@@ -166,42 +166,8 @@ UnicodeConnectorPunctuation
   = Pc
 
 ReservedWord
-  = Keyword
-  / FutureReservedWord
-  / NullLiteral
+  = NullLiteral
   / BooleanLiteral
-
-Keyword
-  = BreakToken
-  / CaseToken
-  / CatchToken
-  / ContinueToken
-  / DebuggerToken
-  / DefaultToken
-  / DeleteToken
-  / FinallyToken
-  / ForToken
-  / FunctionToken
-  / InstanceofToken
-  / NewToken
-  / ReturnToken
-  / SwitchToken
-  / ThisToken
-  / ThrowToken
-  / TryToken
-  / TypeofToken
-  / VarToken
-  / VoidToken
-  / WithToken
-
-FutureReservedWord
-  = ClassToken
-  / ConstToken
-  / EnumToken
-  / ExportToken
-  / ExtendsToken
-  / ImportToken
-  / SuperToken
 
 Literal
   = NullLiteral
@@ -440,42 +406,12 @@ Zs = [\u0020\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]
 
 // Tokens
 
-BreakToken      = "break"      !IdentifierPart
-CaseToken       = "case"       !IdentifierPart
-CatchToken      = "catch"      !IdentifierPart
-ClassToken      = "class"      !IdentifierPart
-ConstToken      = "const"      !IdentifierPart
-ContinueToken   = "continue"   !IdentifierPart
-DebuggerToken   = "debugger"   !IdentifierPart
-DefaultToken    = "default"    !IdentifierPart
-DeleteToken     = "delete"     !IdentifierPart
-EnumToken       = "enum"       !IdentifierPart
-ExportToken     = "export"     !IdentifierPart
-ExtendsToken    = "extends"    !IdentifierPart
 FalseToken      = "false"      !IdentifierPart
-FinallyToken    = "finally"    !IdentifierPart
-ForToken        = "for"        !IdentifierPart
-FunctionToken   = "function"   !IdentifierPart
 LambdaToken1    = "lambda"     !IdentifierPart
 LambdaToken2    = "\\"
-GetToken        = "get"        !IdentifierPart
-ImportToken     = "import"     !IdentifierPart
-InstanceofToken = "instanceof" !IdentifierPart
-NewToken        = "new"        !IdentifierPart
 NullToken       = "null"       !IdentifierPart
 NilToken        = "nil"        !IdentifierPart
-ReturnToken     = "return"     !IdentifierPart
-SetToken        = "set"        !IdentifierPart
-SuperToken      = "super"      !IdentifierPart
-SwitchToken     = "switch"     !IdentifierPart
-ThisToken       = "this"       !IdentifierPart
-ThrowToken      = "throw"      !IdentifierPart
 TrueToken       = "true"       !IdentifierPart
-TryToken        = "try"        !IdentifierPart
-TypeofToken     = "typeof"     !IdentifierPart
-VarToken        = "var"        !IdentifierPart
-VoidToken       = "void"       !IdentifierPart
-WithToken       = "with"       !IdentifierPart
 
 // Skipped
 
@@ -504,12 +440,11 @@ EOF
 // ----- A.3 Expressions -----
 
 PrimaryExpression
-  = ThisToken { return { type: "ThisExpression",location: location() }; }
+  = "(" __ expression:Expression __ ")" { return expression; }
   / Identifier
   / Literal
   / ArrayLiteral
   / ObjectLiteral
-  / "(" __ expression:Expression __ ")" { return expression; }
 
 ArrayLiteral
   = "[" __ elision:(Elision __)? "]" {
@@ -564,38 +499,6 @@ PropertyAssignment
   = key:PropertyName __ ":" __ value:AssignmentExpression {
       return { type: "Property", key: key, value: value, kind: "init",location: location() };
     }
-  / GetToken __ key:PropertyName __
-    "(" __ ")" __
-    "{" __ body:FunctionBody __ "}"
-    {
-      return {
-        type: "Property",
-        key: key,
-        value: {
-          type: "FunctionExpression",
-          id: null,
-          params: [],
-          body: body
-        },
-        kind: "get",location: location()
-      };
-    }
-  / SetToken __ key:PropertyName __
-    "(" __ params:PropertySetParameterList __ ")" __
-    "{" __ body:FunctionBody __ "}"
-    {
-      return {
-        type: "Property",
-        key: key,
-        value: {
-          type: "FunctionExpression",
-          id: null,
-          params: params,
-          body: body
-        },
-        kind: "set",location: location()
-      };
-    }
 
 PropertyName
   = IdentifierName
@@ -607,16 +510,11 @@ PropertySetParameterList
 
 MemberExpression
   = head:(
-        BracketsBlock
-      / PrimaryExpression
-      / FunctionExpression
+        PrimaryExpression
       / value:$(UnicodeDigit+){return {
             "type": "Literal",
             "value": Number(value),location: location()
         }}
-      / NewToken __ callee:MemberExpression __ args:Arguments {
-          return { type: "NewExpression", callee: callee, arguments: args,location: location() };
-        }
     )
     tail:(
         __ "[" __ property:Expression __ "]" {
@@ -640,9 +538,6 @@ MemberExpression
 
 NewExpression
   = MemberExpression
-  / NewToken __ callee:NewExpression {
-      return { type: "NewExpression", callee: callee, arguments: [],location: location() };
-    }
 
 CallExpression
   = head:(
@@ -707,7 +602,6 @@ AssignmentExpressions
         ...list[0]
     }
 }
- / Block
 
 ArgumentName = identifier:Identifier":"!"="{return identifier}
 LeftHandSideExpression
@@ -748,10 +642,7 @@ UnaryExpression
     }
 
 UnaryOperator
-  = $DeleteToken
-  / $VoidToken
-  / $TypeofToken
-  / "++"
+  = "++"
   / "--"
   / $("+" !"=")
   / $("-" !"=")
@@ -797,7 +688,6 @@ RelationalOperator
   / ">="
   / $("<" !"<")
   / $(">" !">")
-  / $InstanceofToken
 
 RelationalExpressionNoIn
   = head:ShiftExpression
@@ -809,7 +699,6 @@ RelationalOperatorNoIn
   / ">="
   / $("<" !"<")
   / $(">" !">")
-  / $InstanceofToken
 
 EqualityExpression
   = head:RelationalExpression
@@ -1022,38 +911,23 @@ Statement
   = VariableStatement
   / EmptyStatement
   / ExpressionStatement
-  / ContinueStatement
-  / BreakStatement
-  / ReturnStatement
-  / WithStatement
-  / LabelledStatement
-  / ThrowStatement
-  / TryStatement
-  / DebuggerStatement
-  / Block
+  / Block 
 
 Block
-  = BracketsBlock
-  / BracesBlock
-
-BracketsBlock
   = "(" __ body:(StatementList __)? ")" {
-    return {
-      type: "BlockStatement",
-      __type: "BracketsBlock",
-      body: optionalList(extractOptional(body, 0)),location: location()
-    };
-  }
-
-BracesBlock
-  = "{" __ body:(StatementList __)? "}" {
-    return {
-      type: "BlockStatement",
-      __type: "BracesBlock",
-      body: optionalList(extractOptional(body, 0)),location: location()
-    };
-  }
-
+      return {
+        type: "BlockStatement",
+        __type: "Block1",
+        body: optionalList(extractOptional(body, 0)),location: location()
+      };
+    }
+  / "{" __ body:(StatementList __)? "}" {
+      return {
+        type: "BlockStatement",
+        __type: "Block2",
+        body: optionalList(extractOptional(body, 0)),location: location()
+      };
+    }
 StatementList
   = head:Statement tail:(__ Statement)* { return buildList(head, tail, 1); }
 
@@ -1104,157 +978,14 @@ EmptyStatement
   = ";" { return { type: "EmptyStatement" ,location: location()}; }
 
 ExpressionStatement
-  = !("{" / FunctionToken) expression:Expression EOS {
+  = !("{") expression:Expression EOS {
       return {
         type: "ExpressionStatement",
         expression: expression,location: location()
       };
     }
 
-
-ContinueStatement
-  = ContinueToken EOS {
-      return { type: "ContinueStatement", label: null,location: location() };
-    }
-  / ContinueToken _ label:Identifier EOS {
-      return { type: "ContinueStatement", label: label,location: location() };
-    }
-
-BreakStatement
-  = BreakToken EOS {
-      return { type: "BreakStatement", label: null,location: location() };
-    }
-  / BreakToken _ label:Identifier EOS {
-      return { type: "BreakStatement", label: label,location: location() };
-    }
-
-ReturnStatement
-  = ReturnToken EOS {
-      return { type: "ReturnStatement", argument: null,location: location() };
-    }
-  / ReturnToken _ argument:Expression EOS {
-      return { type: "ReturnStatement", argument: argument,location: location() };
-    }
-
-WithStatement
-  = WithToken __ "(" __ object:Expression __ ")" __
-    body:Statement
-    { return { type: "WithStatement", object: object, body: body,location: location() }; }
-
-
-CaseBlock
-  = "{" __ clauses:(CaseClauses __)? "}" {
-      return optionalList(extractOptional(clauses, 0));
-    }
-  / "{" __
-    before:(CaseClauses __)?
-    default_:DefaultClause __
-    after:(CaseClauses __)? "}"
-    {
-      return optionalList(extractOptional(before, 0))
-        .concat(default_)
-        .concat(optionalList(extractOptional(after, 0)));
-    }
-
-CaseClauses
-  = head:CaseClause tail:(__ CaseClause)* { return buildList(head, tail, 1); }
-
-CaseClause
-  = CaseToken __ test:Expression __ ":" consequent:(__ StatementList)? {
-      return {
-        type: "SwitchCase",
-        test: test,
-        consequent: optionalList(extractOptional(consequent, 1)),location: location()
-      };
-    }
-
-DefaultClause
-  = DefaultToken __ ":" consequent:(__ StatementList)? {
-      return {
-        type: "SwitchCase",
-        test: null,
-        consequent: optionalList(extractOptional(consequent, 1)),location: location()
-      };
-    }
-
-LabelledStatement
-  = label:Identifier __ ":" __ body:Statement {
-      return { type: "LabeledStatement", label: label, body: body,location: location() };
-    }
-
-ThrowStatement
-  = ThrowToken _ argument:Expression EOS {
-      return { type: "ThrowStatement", argument: argument,location: location() };
-    }
-
-TryStatement
-  = TryToken __ block:Block __ handler:Catch __ finalizer:Finally {
-      return {
-        type: "TryStatement",
-        block: block,
-        handler: handler,
-        finalizer: finalizer,location: location()
-      };
-    }
-  / TryToken __ block:Block __ handler:Catch {
-      return {
-        type: "TryStatement",
-        block: block,
-        handler: handler,
-        finalizer: null,location: location()
-      };
-    }
-  / TryToken __ block:Block __ finalizer:Finally {
-      return {
-        type: "TryStatement",
-        block: block,
-        handler: null,
-        finalizer: finalizer,location: location()
-      };
-    }
-
-Catch
-  = CatchToken __ "(" __ param:Identifier __ ")" __ body:Block {
-      return {
-        type: "CatchClause",
-        param: param,
-        body: body,location: location()
-      };
-    }
-
-Finally
-  = FinallyToken __ block:Block { return block; }
-
-DebuggerStatement
-  = DebuggerToken EOS { return { type: "DebuggerStatement",location: location() }; }
-
 // ----- A.5 Functions and Programs -----
-
-FunctionDeclaration
-  = FunctionToken __ id:Identifier __
-    "(" __ params:(FormalParameterList __)? ")" __
-    "{" __ body:FunctionBody __ "}"
-    {
-      return {
-        type: "FunctionDeclaration",
-        id: id,
-        params: optionalList(extractOptional(params, 0)),
-        body: body,location: location()
-      };
-    }
-
-FunctionExpression
-  = FunctionToken __ id:(Identifier __)?
-    "(" __ params:(FormalParameterList __)? ")" __
-    "{" __ body:FunctionBody __ "}"
-    {
-      return {
-        type: "FunctionExpression",
-        id: extractOptional(id, 0),
-        params: optionalList(extractOptional(params, 0)),
-        body: body,location: location()
-      };
-    }
 
 LambdaExpression
   = LambdaExpression1
@@ -1317,7 +1048,6 @@ SourceElements
 SourceElement
   = Statement
   / LambdaExpression
-  / FunctionDeclaration
 
 // ----- A.6 Universal Resource Identifier Character Classes -----
 
