@@ -7,7 +7,7 @@ const processJoin: PrototypeArrayFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const separator = execute(script.arguments[0], scopes, trace);
   if (typeof separator !== "undefined") {

@@ -47,7 +47,7 @@ const processors = {
 const processAssignmentExpression = (
   script: A_AssignmentExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ): unknown => {
   const left = execute(script.left, scopes, trace);
   const right = execute(script.right, scopes, trace);

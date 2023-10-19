@@ -25,7 +25,7 @@ import { getGlobalScope, resolve } from "@/utils";
 const processCallExpression = (
   script: A_CallExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const isMemberExpression = typeGuard.MemberExpression(script.callee);
   const callee = getName(
@@ -33,7 +33,7 @@ const processCallExpression = (
       ? (script.callee as A_MemberExpression).property
       : script.callee,
     scopes,
-    trace
+    trace,
   ) as string;
   const object = getThis(script, scopes, trace);
   const objectRef = object?.[callee];
@@ -75,7 +75,7 @@ const processDefinedFunction = (
   scopes: T_scope[],
   trace: A_ANY[],
   func: definedFunction,
-  object?: { [k: string]: unknown }
+  object?: { [k: string]: unknown },
 ) => {
   if (func.isKari) {
     return processDefinedKariFunction(script, scopes, trace, func);
@@ -88,7 +88,7 @@ const processDefinedKariFunction = (
   script: A_CallExpression,
   scopes: T_scope[],
   trace: A_ANY[],
-  func: definedKariFunction
+  func: definedKariFunction,
 ) => {
   const args: { [key: string]: unknown } = {};
   let count = 1;
@@ -97,7 +97,7 @@ const processDefinedKariFunction = (
       args[getName(val.NIWANGO_Identifier, scopes, trace) as string] = execute(
         val,
         scopes,
-        trace
+        trace,
       );
     } else {
       args[`$${count++}`] = execute(val, scopes, trace);
@@ -111,10 +111,10 @@ const processDefinedNormalFunction = (
   scopes: T_scope[],
   trace: A_ANY[],
   func: definedNormalFunction,
-  object?: { [k: string]: unknown }
+  object?: { [k: string]: unknown },
 ) => {
   const argNames = func.script.arguments[0].arguments.map(
-    (arg) => getName(arg, scopes, trace) as string
+    (arg) => getName(arg, scopes, trace) as string,
   );
   const args = argumentParser(script.arguments, scopes, argNames, trace);
   const scope = object
@@ -131,7 +131,7 @@ const processDefinedNormalFunction = (
 const getThis = (
   script: A_CallExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ): { [key: string]: unknown } => {
   if (typeGuard.MemberExpression(script.callee))
     return execute(script.callee.object, scopes, trace) as {

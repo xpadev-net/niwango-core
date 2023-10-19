@@ -7,7 +7,7 @@ const processMultiply: PrototypeStringFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const repeatCount = execute(script.arguments[0], scopes, trace);
   return Multiplication(object, repeatCount);

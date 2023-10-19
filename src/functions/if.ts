@@ -15,14 +15,14 @@ const processIf: IrFunction = (
   script: A_CallExpression,
   scopes: T_scope[],
   _,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const args = argumentParser(
     script.arguments,
     scopes,
     ["when", "then", "else"],
     trace,
-    false
+    false,
   ) as { [key in "when" | "then" | "else"]?: A_ANY };
   const condition = execute(args.when, scopes, trace);
   if (condition) {

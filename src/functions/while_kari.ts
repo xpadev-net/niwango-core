@@ -14,7 +14,7 @@ const processWhileKari: IrFunction = (
   script: A_CallExpression,
   scopes: T_scope[],
   _,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   if (!(script.arguments[0] && script.arguments[1])) {
     return;

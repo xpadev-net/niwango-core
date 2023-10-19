@@ -56,7 +56,7 @@ const processors = {
 const processBinaryExpression = (
   script: A_BinaryExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const left = execute(script.left, scopes, trace);
   const right = execute(script.right, scopes, trace);

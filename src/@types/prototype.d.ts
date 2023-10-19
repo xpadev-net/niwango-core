@@ -4,7 +4,7 @@ export type PrototypeFunction<T> = (
   script: A_CallExpression,
   scopes: T_scope[],
   object: T,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => unknown;
 
 export type PrototypeFunctions<T> = {
@@ -27,5 +27,5 @@ export type ResolveResult = PrototypeFunction<unknown> | undefined;
 
 export type ResolvePrototype = (
   type: prototypeType,
-  name: string
+  name: string,
 ) => ResolveResult;

@@ -6,13 +6,13 @@ import { run } from "@/testUtils";
 test("Array basic", () => {
   expect(
     run(
-      `array = [["A","B"],["C",["D",["F"],"E"],"G"],"H","I"]; array[1][1][1][0]`
-    )
+      `array = [["A","B"],["C",["D",["F"],"E"],"G"],"H","I"]; array[1][1][1][0]`,
+    ),
   ).toBe("F");
   expect(
     run(
-      `array = [["A","B"],["C",["D",["F"],"E"],"G"],"H","I"];array[1][1][1][0]="AAAA"; array[1][1][1][0]`
-    )
+      `array = [["A","B"],["C",["D",["F"],"E"],"G"],"H","I"];array[1][1][1][0]="AAAA"; array[1][1][1][0]`,
+    ),
   ).toBe("AAAA");
   expect(run(`array=[0,1,2,3];array[2]=5;array[2]`)).toBe(5);
 });
@@ -32,8 +32,8 @@ describe("Array.prototype", () => {
     expect(run(`array = ["A","B","C"];array.pop`)).toBe("C");
     expect(
       run(
-        `array = ["A","B","C"];array.pop;array.size + ":" + array[array.size-1]`
-      )
+        `array = ["A","B","C"];array.pop;array.size + ":" + array[array.size-1]`,
+      ),
     ).toBe("2:B");
   });
 
@@ -46,15 +46,15 @@ describe("Array.prototype", () => {
     expect(run(`array = ["A","B","C"];array.push("D")`)).toBe(4);
     expect(
       run(
-        `array = ["A","B","C"];array.push("D");array.size + ":" + array[array.size-1]`
-      )
+        `array = ["A","B","C"];array.push("D");array.size + ":" + array[array.size-1]`,
+      ),
     ).toBe("4:D");
   });
 
   test("shift", () => {
     expect(run(`array = ["A","B","C"];array.shift`)).toBe("A");
     expect(
-      run(`array = ["A","B","C"];array.shift;array.size + ":" + array[0]`)
+      run(`array = ["A","B","C"];array.shift;array.size + ":" + array[0]`),
     ).toBe("2:B");
   });
 
@@ -74,8 +74,8 @@ describe("Array.prototype", () => {
     expect(run(`array = ["A","B","C"];array.unshift("D")`)).toBe(4);
     expect(
       run(
-        `array = ["A","B","C"];array.unshift("D");array.size + ":" + array[0]`
-      )
+        `array = ["A","B","C"];array.unshift("D");array.size + ":" + array[0]`,
+      ),
     ).toBe("4:D");
   });
 

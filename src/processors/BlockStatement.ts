@@ -10,11 +10,11 @@ import { execute } from "@/context";
 const processBlockStatement = (
   script: A_BlockStatement,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   return script.body.reduce(
     (_, item) => execute(item, scopes, trace),
-    undefined as unknown
+    undefined as unknown,
   );
 };
 

@@ -9,11 +9,11 @@ import { execute } from "@/context";
 const processSequenceExpression = (
   script: A_SequenceExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   return script.expressions.reduce(
     (_, arg) => execute(arg, scopes, trace),
-    undefined as unknown
+    undefined as unknown,
   );
 };
 

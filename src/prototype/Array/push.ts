@@ -6,7 +6,7 @@ const processPush: PrototypeArrayFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const value = execute(script.arguments[0], scopes, trace);
   return object.push(value);

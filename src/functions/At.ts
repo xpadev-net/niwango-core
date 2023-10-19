@@ -12,7 +12,7 @@ const processAt: IrFunction = (script, scopes, _, trace: A_ANY[]) => {
     script.arguments[0],
     resolve({ type: "Identifier", name: "@0" }, scopes, trace),
     scopes,
-    trace
+    trace,
   );
 };
 

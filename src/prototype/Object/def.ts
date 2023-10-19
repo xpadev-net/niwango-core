@@ -17,7 +17,7 @@ const processDef: PrototypeObjectFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const functionName = (() => {
     if (typeGuard.Identifier(script.arguments[0])) {
@@ -29,7 +29,7 @@ const processDef: PrototypeObjectFunction = (
     throw new InvalidTypeError(
       "function name must be CallExpression or Identifier",
       script,
-      scopes
+      scopes,
     );
   })();
   if (typeof functionName !== "string") {

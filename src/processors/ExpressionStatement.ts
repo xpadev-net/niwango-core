@@ -4,7 +4,7 @@ import { execute } from "@/context";
 const processExpressionStatement = (
   script: A_ExpressionStatement,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   return execute(script.expression, scopes, trace);
 };

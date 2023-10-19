@@ -7,7 +7,7 @@ const processEval: PrototypeStringFunction = (
   _script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   try {
     const script = parseScript(object, "[eval]");

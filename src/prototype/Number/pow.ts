@@ -7,7 +7,7 @@ const processPow: PrototypeNumberFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const exponent = execute(script.arguments[0], scopes, trace);
   return Math.pow(object, format(exponent, "number"));

@@ -8,7 +8,7 @@ const processCall: PrototypeValueFunction = (
   script,
   scopes,
   _,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const functionNameAst = script.arguments[0];
   if (!functionNameAst)
@@ -18,7 +18,7 @@ const processCall: PrototypeValueFunction = (
     throw new InvalidTypeError(
       "typeof function name must be string",
       script,
-      scopes
+      scopes,
     );
   const newScript: A_CallExpression = {
     type: "CallExpression",

@@ -6,7 +6,7 @@ const processIndex: PrototypeArrayFunction = (
   script,
   scopes,
   object,
-  trace
+  trace,
 ) => {
   const index = execute(script.arguments[0], scopes, trace);
   if (typeof index === "number") {

@@ -11,7 +11,7 @@ import { execute } from "@/context";
 const processVariableDeclaration = (
   script: A_VariableDeclaration,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   let lastItem;
   for (const item of script.declarations) {

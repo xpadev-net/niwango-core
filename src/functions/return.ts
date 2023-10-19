@@ -14,7 +14,7 @@ const processReturn: IrFunction = (
   script: A_CallExpression,
   scopes: T_scope[],
   _,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   return execute(script.arguments[0], scopes, trace);
 };

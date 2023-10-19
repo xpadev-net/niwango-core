@@ -12,7 +12,7 @@ import { resolve } from "@/utils";
 const processIdentifier = (
   script: A_Identifier,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ): unknown => {
   const value = resolve(script, scopes, trace);
   if (typeGuard.definedFunction(value)) {
@@ -27,7 +27,7 @@ const processIdentifier = (
           arguments: [],
         },
         scopes,
-        trace
+        trace,
       );
     } catch (_) {
       //ignore

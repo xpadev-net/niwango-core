@@ -7,14 +7,14 @@ const processAlternative: PrototypeValueFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const args = argumentParser(
     script.arguments,
     scopes,
     ["then", "else"],
     trace,
-    false
+    false,
   );
   if (object && args.then) {
     return execute(args.then, scopes, trace);

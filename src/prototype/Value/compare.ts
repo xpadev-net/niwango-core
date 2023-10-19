@@ -7,7 +7,7 @@ const processCompare: PrototypeValueFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const value = execute(script.arguments[0], scopes, trace);
   if (object == value) return 0;

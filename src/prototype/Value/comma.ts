@@ -6,7 +6,7 @@ const processComma: PrototypeValueFunction = (
   script,
   scopes,
   _,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   return execute(script.arguments[0], scopes, trace);
 };

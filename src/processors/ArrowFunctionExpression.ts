@@ -4,7 +4,7 @@ import { execute } from "@/context";
 const processArrowFunctionExpression = (
   script: A_ArrowFunctionExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   return execute(script.body, scopes, trace);
 };

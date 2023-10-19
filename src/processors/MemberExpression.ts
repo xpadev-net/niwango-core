@@ -13,7 +13,7 @@ import typeGuard from "@/typeGuard";
 const processMemberExpression = (
   script: A_MemberExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const left = execute(script.object, scopes, trace);
   if (left === undefined) {
@@ -21,7 +21,7 @@ const processMemberExpression = (
       "[member expression] left is undefined",
       script,
       scopes,
-      trace
+      trace,
     );
     return;
   }
@@ -35,7 +35,7 @@ const processMemberExpression = (
     return execute(
       func.script.arguments[1],
       [{ self: left }, ...scopes],
-      trace
+      trace,
     );
   }
   if (typeGuard.LambdaExpression(left)) {
@@ -68,7 +68,7 @@ const processMemberExpression = (
         arguments: [],
       },
       [{ self: left }, ...scopes],
-      trace
+      trace,
     );
   } catch (e) {
     return (left as { [key: string]: unknown })[right];

@@ -11,7 +11,7 @@ class InvalidTypeError extends Error {
     message: string,
     ast: A_ANY,
     scopes: T_scope[],
-    options: { [key: string]: unknown } = {}
+    options: { [key: string]: unknown } = {},
   ) {
     super("InvalidTypeError", options);
     this.message = message;

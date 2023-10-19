@@ -10,14 +10,14 @@ import { execute } from "@/context";
 const processObjectExpression = (
   script: A_ObjectExpression,
   scopes: T_scope[],
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const object: { [key: string | number | symbol]: unknown } = {};
   for (const item of script.properties) {
     object[getName(item.key, scopes, trace) as string] = execute(
       item.value,
       scopes,
-      trace
+      trace,
     );
   }
   return object;

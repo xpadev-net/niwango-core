@@ -8,7 +8,7 @@ import { A_ANY } from "@/@types/ast";
  */
 export function parse(
   script: string,
-  options?: Partial<{ grammarSource: string }>
+  options?: Partial<{ grammarSource: string }>,
 ): A_ANY;
 
 /**
@@ -20,7 +20,7 @@ export class SyntaxError extends Error {
     message: string,
     expected: string,
     found: string,
-    location: string
+    location: string,
   );
   expected: string;
   found: string;

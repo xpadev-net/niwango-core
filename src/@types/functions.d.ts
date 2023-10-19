@@ -4,7 +4,7 @@ export type IrFunction = (
   script: A_CallExpression,
   scopes: T_scope[],
   object: { [key: string]: unknown },
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => unknown;
 
 type IrFunctions = {

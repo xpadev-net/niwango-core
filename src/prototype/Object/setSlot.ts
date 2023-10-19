@@ -15,14 +15,14 @@ const processSetSlot: PrototypeObjectFunction = (
   script,
   scopes,
   object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const key = execute(script.arguments[0], scopes, trace);
   if (typeof key !== "string" && typeof key !== "number") {
     throw new InvalidTypeError(
       "[call expression] Object.setSlot: id must be string or number",
       script,
-      scopes
+      scopes,
     );
   }
   const value = execute(script.arguments[1], scopes, trace);

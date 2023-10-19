@@ -15,7 +15,7 @@ const processDump: IrFunction = (
   script: A_CallExpression,
   scopes: T_scope[],
   _object,
-  trace: A_ANY[]
+  trace: A_ANY[],
 ) => {
   const arr = [];
   for (const argument of script.arguments) {

@@ -4,7 +4,7 @@ import { format } from "@/utils/format";
 const processToASString: PrototypeArrayFunction = (
   _script,
   _scopes,
-  object
+  object,
 ) => {
   return (
     "<[" +
